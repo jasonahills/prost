@@ -247,6 +247,7 @@ pub struct Config {
     disable_comments: PathMap<()>,
     skip_protoc_run: bool,
     include_file: Option<PathBuf>,
+    generate_unknown_fields: bool,
 }
 
 impl Config {
@@ -469,6 +470,12 @@ impl Config {
     /// types, and instead generate Protobuf well-known types from their `.proto` definitions.
     pub fn compile_well_known_types(&mut self) -> &mut Self {
         self.prost_types = false;
+        self
+    }
+
+    /// TODO(jason)
+    pub fn generate_unknown_fields(&mut self) -> &mut Self {
+        self.generate_unknown_fields = true;
         self
     }
 
@@ -1055,6 +1062,7 @@ impl default::Default for Config {
             disable_comments: PathMap::default(),
             skip_protoc_run: false,
             include_file: None,
+            generate_unknown_fields: false,
         }
     }
 }
